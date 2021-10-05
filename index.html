@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .main {
+        width: 20%;
+        margin: 15% auto;
+        border: 2px solid red;
+        padding: 20px;
+    }
+</style>
+
+<body>
+    <div class="main">
+
+
+       
+        <label for="">Words Quantity</label>
+        <input type="number" name="" id="quantity"> <br /><br />
+
+        <label for="">Word Type</label>
+        <select name="word_type" class="form-control" id="word_type">
+            <option value="Random" default>Random</option>
+            <option value="Noun" selected>Noun</option>
+            <option value="Adjective">Adjective</option>
+            <option value="Verb">Verb</option>
+        </select> <br /><br />
+        <label for="">Letters Length</label>
+        <input type="number" name="" id="letters-length"> <br /><br />
+        <br /><br /><br /><br /><br /><br />
+        <button onclick="getInputValue();">Submit</button>
+
+    </div>
+    <div class="output-div">
+        <p id="output"></p>
+    </div>
+</body>
+<script>
+
+    const words = [
+        {
+            id: 1,
+            wordName: "Uncle",
+            wordType: "Noun"
+        },
+        {
+            id: 2,
+            wordName: "House",
+            wordType: "Noun"
+        },
+        {
+            id: 3,
+            wordName: "Ocean",
+            wordType: "Noun"
+        },
+        {
+            id: 4,
+            wordName: "Charming",
+            wordType: "Adjective"
+        },
+        {
+            id: 5,
+            wordName: "Cruel",
+            wordType: "Adjective"
+        },
+        {
+            id: 6,
+            wordName: "Fantastic",
+            wordType: "Adjective"
+        },
+        {
+            id: 7,
+            wordName: "Hear",
+            wordType: "Verb"
+        },
+        {
+            id: 8,
+            wordName: "Become",
+            wordType: "Verb"
+        },
+        {
+            id: 9,
+            wordName: "Happen",
+            wordType: "Verb"
+        },
+
+    ]
+
+    function getInputValue() {
+        let output = '<p>'
+        quantityValue = document.getElementById('quantity').value;
+        wordTypeValue = document.getElementById('word_type').value;
+        lettersLengthValue = document.getElementById('letters-length').value;
+        quantityValueInt = parseInt(quantityValue)
+        lettersLengthValueInt = parseInt(lettersLengthValue)
+
+        if (wordTypeValue == "Random") {
+            var getAllWordFromWords = words.filter(item => item.wordName)
+            var makeArrayOfAllWords = [];
+            var neglectRandomUndefinedValue = [];
+
+
+            for (i = 0; i < getAllWordFromWords.length; i++) {
+                makeArrayOfAllWords.push(getAllWordFromWords[i].wordName)
+            }
+            var randomResult = makeArrayOfAllWords.map((item) => item).filter((item) => item.length === lettersLengthValueInt);
+            if (randomResult.length != 0) {
+                for (i = 0; i < quantityValueInt; i++) {
+                    neglectRandomUndefinedValue.push(randomResult[i])
+                }
+            }
+            var finalRandomFiltered = neglectRandomUndefinedValue.filter(function (x) {
+                return x !== undefined;
+            });
+
+            if (finalRandomFiltered.length == 0) {
+                alert('No result found')
+            }
+            else {
+                console.log(finalRandomFiltered);
+
+                for (i = 0; i < finalRandomFiltered.length; i++) {
+                  console.log(finalRandomFiltered[i])
+                  output+=finalRandomFiltered[i]
+                  output+= '<br/>'
+                }
+                output+='</p>';
+                
+                document.getElementById('output').innerHTML = output;
+            }
+
+        }
+        else {
+            var makeArray = [];
+            var neglectUndefinedValue = []
+            var newArray = words.filter(item => item.wordType === wordTypeValue)
+
+            for (i = 0; i < newArray.length; i++) {
+                makeArray.push(newArray[i].wordName)
+            }
+            var result = makeArray.map((item) => item).filter((item) => item.length === lettersLengthValueInt);
+            if (result.length != 0) {
+                for (i = 0; i < quantityValueInt; i++) {
+                    neglectUndefinedValue.push(result[i])
+                }
+            }
+            var finalFiltered = neglectUndefinedValue.filter(function (x) {
+                return x !== undefined;
+            });
+
+            if (finalFiltered.length == 0) {
+                alert('No result found')
+            }
+            else {
+                for (i = 0; i < finalFiltered.length; i++) {
+                  console.log(finalFiltered[i])
+                  output+=finalFiltered[i]
+                  output+= '<br/>'
+                }
+                output+='</p>';
+                document.getElementById('output').innerHTML = output;
+            }
+
+        }
+
+    }
+
+</script>
+
+</html>
